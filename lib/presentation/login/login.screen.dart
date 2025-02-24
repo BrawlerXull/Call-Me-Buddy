@@ -10,57 +10,94 @@ class LoginScreen extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     const double gap = 30;
+    final formKey = GlobalKey<ShadFormState>(); 
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Icon(
-              Icons.person_2,
-              size: 80,
-              color: ShadTheme.of(context).colorScheme.primary,
-            ),
-            const SizedBox(height: gap),
-            Text(
-              "Welcome to Call Me Buddy",
-              style: ShadTheme.of(context).textTheme.h3,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: gap),
-            Text(
-              "Sign Up to Continue",
-              style: ShadTheme.of(context).textTheme.small,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: gap),
-            ShadInput(
-              placeholder: Text("Full Name"),
-              leading: Icon(
-                Icons.person,
+        child: ShadForm(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Icon(
+                Icons.person_2,
+                size: 80,
                 color: ShadTheme.of(context).colorScheme.primary,
               ),
-            ),
-            const SizedBox(height: gap),
-            ShadInput(
-              placeholder: Text("Phone Number"),
-              leading: Icon(
-                Icons.phone,
-                color: ShadTheme.of(context).colorScheme.primary,
+              const SizedBox(height: gap),
+              Text(
+                "Welcome to Call Me Buddy",
+                style: ShadTheme.of(context).textTheme.h3,
+                textAlign: TextAlign.center,
               ),
-              keyboardType: TextInputType.phone,
-            ),
-            const SizedBox(height: gap),
-            Obx(
-              () => ShadButton(
-                onPressed: () {},
-                child: controller.isLoading.value
-                    ? const CircularProgressIndicator()
-                    : const Text("Login"),
+              const SizedBox(height: gap),
+              Text(
+                "Sign Up to Continue",
+                style: ShadTheme.of(context).textTheme.small,
+                textAlign: TextAlign.center,
               ),
-            ),
-          ],
+              const SizedBox(height: gap),
+
+              ShadInputFormField(
+                id: 'fullName',
+                label: const Text('Full Name'),
+                placeholder: const Text("Enter your full name"),
+                controller: controller.nameController,
+                leading: Icon(
+                  Icons.person,
+                  color: ShadTheme.of(context).colorScheme.primary,
+                ),
+                validator: (v) {
+                  if (v.trim().length < 2) {
+                    return 'Username must be at least 2 characters.';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: gap),
+
+              ShadInputFormField(
+                id: 'phoneNumber',
+                label: const Text('Phone Number'),
+                placeholder: const Text("Enter your phone number"),
+                controller: controller.phoneController,
+                leading: Icon(
+                  Icons.phone,
+                  color: ShadTheme.of(context).colorScheme.primary,
+                ),
+                keyboardType: TextInputType.phone,
+                validator: (v) {
+                  if (v.trim().isEmpty) {
+                    return 'Phone number is required.';
+                  }
+                  if (!RegExp(r'^[0-9]{10,}$').hasMatch(v)) {
+                    return 'Enter a valid 10-digit phone number.';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: gap),
+
+              Obx(
+                () => ShadButton(
+                  onPressed: () {
+                    if (formKey.currentState != null &&
+                        formKey.currentState!.saveAndValidate()) {
+                      controller
+                          .handleLogin();
+                    } else {
+                      print("Form validation failed!");
+                    }
+                  },
+                  child: controller.isLoading.value
+                      ? const CircularProgressIndicator()
+                      : const Text("Login"),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,3 +1,5 @@
+import 'package:callmebuddy/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -6,7 +8,15 @@ import 'infrastructure/navigation/navigation.dart';
 import 'infrastructure/navigation/routes.dart';
 
 void main() async {
-  var initialRoute = await Routes.initialRoute;
+  WidgetsFlutterBinding
+      .ensureInitialized(); 
+
+var initialRoute =
+      await Routes.initialRoute; 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(Main(initialRoute));
 }
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "4081291557",
+    "project_id": "call-me-buddy",
+    "storage_bucket": "call-me-buddy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4081291557:android:97ad67d69beaeabcbecacc",
+        "android_client_info": {
+          "package_name": "com.callmebuddy.callmebuddy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1-msqtQP5IIp0QaC1PuF6e1hI5vMzl_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
