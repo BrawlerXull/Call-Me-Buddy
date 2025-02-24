@@ -9,6 +9,7 @@ class LoginScreen extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
+    const double gap = 30;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -16,31 +17,41 @@ class LoginScreen extends GetView<LoginController> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Icon(Icons.person_2, size: 80, color: Colors.lightGreen),
-            const SizedBox(height: 24),
+            Icon(
+              Icons.person_2,
+              size: 80,
+              color: ShadTheme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(height: gap),
             Text(
               "Welcome to Call Me Buddy",
               style: ShadTheme.of(context).textTheme.h3,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: gap),
             Text(
               "Sign Up to Continue",
               style: ShadTheme.of(context).textTheme.small,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: gap),
             ShadInput(
               placeholder: Text("Full Name"),
-              leading: const Icon(Icons.person),
+              leading: Icon(
+                Icons.person,
+                color: ShadTheme.of(context).colorScheme.primary,
+              ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: gap),
             ShadInput(
               placeholder: Text("Phone Number"),
-              leading: const Icon(Icons.phone),
+              leading: Icon(
+                Icons.phone,
+                color: ShadTheme.of(context).colorScheme.primary,
+              ),
               keyboardType: TextInputType.phone,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: gap),
             Obx(
               () => ShadButton(
                 onPressed: () {},

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -9,39 +10,46 @@ class OtpScreen extends GetView<OtpController> {
 
   @override
   Widget build(BuildContext context) {
+    const double gap = 30;
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.lock_outline,
-                size: 80,
-                color: Colors.lightGreen,
-              ),
-
-              const SizedBox(height: 16),
-
-              Text(
-                "Enter OTP",
-                style: ShadTheme.of(context).textTheme.h1,
-              ),
-
-              const SizedBox(height: 8),
-
-              Text(
-                "We have sent an OTP to your registered number",
-                textAlign: TextAlign.center,
-                style: ShadTheme.of(context).textTheme.muted,
-              ),
-
-              const SizedBox(height: 24),
-
-              ShadInputOTP(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Icon(
+              Icons.lock_outline,
+              size: 80,
+              color: ShadTheme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(
+              height: gap,
+            ),
+            Text(
+              "Enter OTP",
+              style: ShadTheme.of(context).textTheme.h3,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: gap,
+            ),
+            Text(
+              "We have sent an OTP to your registered number",
+              textAlign: TextAlign.center,
+              style: ShadTheme.of(context).textTheme.muted,
+            ),
+            const SizedBox(
+              height: gap,
+            ),
+            Center(
+              child: ShadInputOTP(
                 onChanged: (v) => print('OTP: $v'),
                 maxLength: 6,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 children: const [
                   ShadInputOTPGroup(
                     children: [
@@ -55,26 +63,19 @@ class OtpScreen extends GetView<OtpController> {
                   ),
                 ],
               ),
-
-              const SizedBox(height: 24),
-
-              ShadButton(
-                onPressed: () {
-                  // controller.verifyOtp();
-                },
-                child: Obx(() => controller.isLoading.value
-                    ? const CircularProgressIndicator()
-                    : const Text("Verify OTP")),
-              ),
-
-              const SizedBox(height: 16),
-
-              TextButton(
-                onPressed: () {},
-                child: const Text("Resend OTP"),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: gap,
+            ),
+            Obx(() => ShadButton(
+                  onPressed: () {
+                    // controller.verifyOtp();
+                  },
+                  child: controller.isLoading.value
+                      ? const CircularProgressIndicator()
+                      : const Text("Verify OTP"),
+                )),
+          ],
         ),
       ),
     );

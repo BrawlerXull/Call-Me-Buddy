@@ -26,7 +26,7 @@ class Main extends StatelessWidget {
       ),
       darkTheme: ShadThemeData(
         colorScheme: ShadColorScheme.fromName(
-          'red',
+          'slate',
           brightness: Brightness.dark,
         ),
         brightness: Brightness.dark,
