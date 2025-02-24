@@ -31,5 +31,15 @@ class Nav {
       page: () => const HomeScreen(),
       binding: HomeControllerBinding(),
     ),
+    GetPage(
+      name: Routes.OTP,
+      page: () => const OtpScreen(),
+      binding: OtpControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.LOGIN,
+      page: () => const LoginScreen(),
+      binding: LoginControllerBinding(),
+    ),
   ];
 }
