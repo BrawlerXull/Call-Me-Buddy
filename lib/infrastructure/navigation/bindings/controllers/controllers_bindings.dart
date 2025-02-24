@@ -1,0 +1,1 @@
+export 'package:callmebuddy/infrastructure/navigation/bindings/controllers/home.controller.binding.dart'; 
