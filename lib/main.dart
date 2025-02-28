@@ -1,4 +1,5 @@
 import 'package:callmebuddy/firebase_options.dart';
+import 'package:callmebuddy/infrastructure/navigation/bindings/controllers/initial_bindings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,7 @@ class Main extends StatelessWidget {
         theme: theme,
         getPages: Nav.routes,
         initialRoute: initialRoute,
+        initialBinding: InitialBinding(),
         builder: (context, child) {
           return ShadToaster(child: child!);
         },

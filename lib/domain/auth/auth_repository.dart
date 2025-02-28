@@ -8,4 +8,6 @@ abstract class AuthRepository {
   });
 
   Future<void> signInWithCredential(String verificationId, String smsCode);
+
+  Future<void> signOut();
 }

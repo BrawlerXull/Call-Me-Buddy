@@ -16,7 +16,7 @@ class AuthService implements AuthRepository {
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
         UserCredential user = await _auth.signInWithCredential(credential);
-        verificationCompleted(user.user?.uid ?? ""); 
+        verificationCompleted(user.user?.uid ?? "");
       },
       verificationFailed: (FirebaseAuthException e) {
         verificationFailed(e.message ?? "Verification failed");
@@ -31,11 +31,17 @@ class AuthService implements AuthRepository {
   }
 
   @override
-  Future<void> signInWithCredential(String verificationId, String smsCode) async {
+  Future<void> signInWithCredential(
+      String verificationId, String smsCode) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
       verificationId: verificationId,
       smsCode: smsCode,
     );
     await _auth.signInWithCredential(credential);
+  }
+
+  @override
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 }
