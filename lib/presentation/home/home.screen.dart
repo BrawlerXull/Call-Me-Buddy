@@ -8,7 +8,7 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ShadTheme.of(context); // Fetch ShadCN theme
+    final theme = ShadTheme.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -23,18 +23,22 @@ class HomeScreen extends GetView<HomeController> {
         ],
       ),
       body: Obx(() {
-        if (controller.isLoading.value) {
+        if (controller.isLoading.value &&
+            controller.displayedContacts.isEmpty) {
           return const Center(child: CircularProgressIndicator());
-        }
-        if (controller.contacts.isEmpty) {
-          return const Center(child: Text("No contacts found"));
         }
 
         return ListView.builder(
+          controller: controller.scrollController,
           padding: const EdgeInsets.all(16),
-          itemCount: controller.contacts.length,
+          itemCount: controller.displayedContacts.length +
+              (controller.hasMore.value ? 1 : 0),
           itemBuilder: (context, index) {
-            final contact = controller.contacts[index];
+            if (index == controller.displayedContacts.length) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            final contact = controller.displayedContacts[index];
             final String initials = _getInitials(contact.displayName);
 
             return Padding(
@@ -43,19 +47,17 @@ class HomeScreen extends GetView<HomeController> {
                 padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
-
                     Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: theme.colorScheme.primary,
-                          width: 1, 
+                          width: 1,
                         ),
                       ),
                       child: CircleAvatar(
                         radius: 19,
-                        backgroundColor: theme
-                            .colorScheme.background, 
+                        backgroundColor: theme.colorScheme.background,
                         child: Text(
                           initials,
                           style: theme.textTheme.muted.copyWith(
@@ -65,9 +67,7 @@ class HomeScreen extends GetView<HomeController> {
                         ),
                       ),
                     ),
-
                     const SizedBox(width: 12),
-
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,13 +86,10 @@ class HomeScreen extends GetView<HomeController> {
                         ],
                       ),
                     ),
-
                     ShadButton.outline(
                       size: ShadButtonSize.sm,
                       child: const Icon(LucideIcons.phoneCall, size: 18),
-                      onPressed: () {
-                        // TODO: Implement call functionality
-                      },
+                      onPressed: () {},
                     ),
                   ],
                 ),
@@ -105,12 +102,10 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   String _getInitials(String? name) {
-    if (name == null || name.trim().isEmpty) return "?"; 
-
+    if (name == null || name.trim().isEmpty) return "?";
     List<String> names = name.trim().split(RegExp(r'\s+'));
-    if (names.length > 1) {
-      return "${names[0][0]}${names[1][0]}".toUpperCase();
-    }
-    return names[0][0].toUpperCase();
+    return names.length > 1
+        ? "${names[0][0]}${names[1][0]}".toUpperCase()
+        : names[0][0].toUpperCase();
   }
 }
