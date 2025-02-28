@@ -14,17 +14,31 @@ class HomeScreen extends GetView<HomeController> {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: ()=> controller.logout(),
+            onPressed: () => controller.logout(),
             tooltip: "Logout",
           ),
         ],
       ),
-      body: const Center(
-        child: Text(
-          'HomeScreen is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (controller.contacts.isEmpty) {
+          return const Center(child: Text("No contacts found"));
+        }
+        return ListView.builder(
+          itemCount: controller.contacts.length,
+          itemBuilder: (context, index) {
+            final contact = controller.contacts[index];
+            return ListTile(
+              title: Text(contact.displayName),
+              subtitle: Text(
+                contact.phones.isNotEmpty ? contact.phones.first.number : "No phone number",
+              ),
+            );
+          },
+        );
+      }),
     );
   }
 }
