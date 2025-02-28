@@ -44,7 +44,11 @@ class OtpScreen extends GetView<OtpController> {
             ),
             Center(
               child: ShadInputOTP(
-                onChanged: (v) => print('OTP: $v'),
+                onChanged: (v) {
+                  print('OTP entered: $v'); // Debugging
+                  controller.otpController.text =
+                      v; // ✅ Store OTP in controller
+                },
                 maxLength: 6,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -69,7 +73,7 @@ class OtpScreen extends GetView<OtpController> {
             ),
             Obx(() => ShadButton(
                   onPressed: () {
-                    // controller.verifyOtp();
+                    controller.verifyOtp();
                   },
                   child: controller.isLoading.value
                       ? const CircularProgressIndicator()

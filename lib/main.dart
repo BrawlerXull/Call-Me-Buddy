@@ -8,14 +8,16 @@ import 'infrastructure/navigation/navigation.dart';
 import 'infrastructure/navigation/routes.dart';
 
 void main() async {
-  WidgetsFlutterBinding
-      .ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
 
-var initialRoute =
-      await Routes.initialRoute; 
+  var initialRoute = await Routes.initialRoute;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  ).then((value) {
+    print("Firebase initialized successfully");
+  }).catchError((error) {
+    print("Firebase initialization failed: $error");
+  });
 
   runApp(Main(initialRoute));
 }

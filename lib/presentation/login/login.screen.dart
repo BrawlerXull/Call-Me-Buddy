@@ -72,9 +72,9 @@ class LoginScreen extends GetView<LoginController> {
                   if (v.trim().isEmpty) {
                     return 'Phone number is required.';
                   }
-                  if (!RegExp(r'^[0-9]{10,}$').hasMatch(v)) {
-                    return 'Enter a valid 10-digit phone number.';
-                  }
+                  // if (!RegExp(r'^[0-9]{10,}$').hasMatch(v)) {
+                  //   return 'Enter a valid 10-digit phone number.';
+                  // }
                   return null;
                 },
               ),
