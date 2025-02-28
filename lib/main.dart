@@ -1,5 +1,6 @@
 import 'package:callmebuddy/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -10,14 +11,19 @@ import 'infrastructure/navigation/routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  var initialRoute = await Routes.initialRoute;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) {
-    print("Firebase initialized successfully");
+    if (kDebugMode) {
+      print("✅ Firebase initialized successfully");
+    }
   }).catchError((error) {
-    print("Firebase initialization failed: $error");
+    if (kDebugMode) {
+      print("❌ Firebase initialization failed: $error");
+    }
   });
+
+  String initialRoute = await Routes.getInitialRoute();
 
   runApp(Main(initialRoute));
 }
