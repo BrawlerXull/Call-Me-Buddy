@@ -41,5 +41,10 @@ class Nav {
       page: () => const LoginScreen(),
       binding: LoginControllerBinding(),
     ),
+    GetPage(
+      name: Routes.CONTACT_DETAILS,
+      page: () => const ContactDetailsScreen(),
+      binding: ContactDetailsControllerBinding(),
+    ),
   ];
 }

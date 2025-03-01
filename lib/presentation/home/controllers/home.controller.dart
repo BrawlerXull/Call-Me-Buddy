@@ -1,3 +1,4 @@
+import 'package:callmebuddy/infrastructure/navigation/routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:callmebuddy/domain/contacts/contact_repository.dart';
 import 'package:flutter/widgets.dart';
@@ -23,6 +24,12 @@ class HomeController extends GetxController {
     super.onInit();
     _setupScrollListener();
     fetchContacts();
+  }
+
+  void handleContactTap(Contact contact) {
+    print(contact.toJson());
+    Get.toNamed(Routes.CONTACT_DETAILS, arguments: contact);
+    Get.snackbar("Contact", "Name: ${contact.displayName}");
   }
 
   void _setupScrollListener() {

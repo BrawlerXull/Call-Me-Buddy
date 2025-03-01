@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Routes {
   static Future<String> getInitialRoute() async {
@@ -19,6 +20,7 @@ class Routes {
   }
 
   static const HOME = '/home';
-  static const OTP = '/otp';
   static const LOGIN = '/login';
+  static const OTP = '/otp';
+  static const CONTACT_DETAILS = '/contact-details';
 }
