@@ -1,5 +1,6 @@
 import 'package:callmebuddy/firebase_options.dart';
 import 'package:callmebuddy/infrastructure/navigation/bindings/controllers/initial_bindings.dart';
+import 'package:callmebuddy/infrastructure/theme/shad_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -36,20 +37,8 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShadApp.custom(
-      theme: ShadThemeData(
-        brightness: Brightness.light,
-        colorScheme: ShadColorScheme.fromName(
-          'green',
-          brightness: Brightness.light,
-        ),
-      ),
-      darkTheme: ShadThemeData(
-        colorScheme: ShadColorScheme.fromName(
-          'slate',
-          brightness: Brightness.dark,
-        ),
-        brightness: Brightness.dark,
-      ),
+      theme: ShadAppTheme.lightTheme,
+      darkTheme: ShadAppTheme.darkTheme,
       themeMode: ThemeMode.light,
       appBuilder: (context, theme) => GetMaterialApp(
         theme: theme,
