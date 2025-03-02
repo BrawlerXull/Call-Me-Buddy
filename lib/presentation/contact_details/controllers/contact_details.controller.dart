@@ -2,25 +2,17 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 
 class ContactDetailsController extends GetxController {
-  //TODO: Implement ContactDetailsController
+  // Get the contact from the arguments passed
   final Contact contact = Get.arguments as Contact;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
-    print(contact);
+    
+    // Log contact initialization
+    print("🔵 [ContactDetailsController] Initialized with contact: ${contact.displayName}");
+    
+    // Additional log for the contact details
+    print("🔵 [ContactDetailsController] Contact details: ${contact.toJson()}");
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

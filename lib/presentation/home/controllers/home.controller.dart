@@ -1,3 +1,4 @@
+import 'package:callmebuddy/domain/firebase_notification/firebase_notification_repository.dart';
 import 'package:callmebuddy/infrastructure/navigation/routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:callmebuddy/domain/contacts/contact_repository.dart';
@@ -9,6 +10,8 @@ import 'package:callmebuddy/domain/auth/auth_repository.dart';
 class HomeController extends GetxController {
   final AuthRepository _authRepository = Get.find<AuthRepository>();
   final ContactRepository _contactsRepository = Get.find<ContactRepository>();
+  final FirebaseNotificationRepository _firebaseNotificationRepository =
+      Get.find<FirebaseNotificationRepository>();
 
   final ScrollController scrollController = ScrollController();
 
@@ -24,18 +27,35 @@ class HomeController extends GetxController {
     super.onInit();
     _setupScrollListener();
     fetchContacts();
+    getFCMToken();
+  }
+
+  void getFCMToken() async {
+    if (kDebugMode) {
+      print("🔵 [HomeController] Getting FCM token...");
+    }
+    final String firebaseToken =
+        await _firebaseNotificationRepository.getDeviceToken();
+    if (kDebugMode) {
+      print("🟢 [HomeController] FCM token: $firebaseToken");
+    }
   }
 
   void handleContactTap(Contact contact) {
-    print(contact.toJson());
+    if (kDebugMode) {
+      print("🔵 [HomeController] Contact tapped: ${contact.displayName}");
+    }
     Get.toNamed(Routes.CONTACT_DETAILS, arguments: contact);
-    Get.snackbar("Contact", "Name: ${contact.displayName}");
   }
 
   void _setupScrollListener() {
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent - 100) {
+        if (kDebugMode) {
+          print(
+              "🔵 [HomeController] Scroll reached bottom, fetching more contacts...");
+        }
         fetchContacts();
       }
     });

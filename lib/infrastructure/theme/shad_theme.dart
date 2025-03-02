@@ -3,7 +3,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 class ShadAppTheme {
 
-  static const String lightMode = 'green';
+  static const String lightMode = 'blue';
   
   static const String darkMode = 'slate';
 

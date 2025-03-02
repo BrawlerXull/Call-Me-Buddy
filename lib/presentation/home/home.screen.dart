@@ -39,7 +39,6 @@ class HomeScreen extends GetView<HomeController> {
             }
 
             final contact = controller.displayedContacts[index];
-            final String initials = _getInitials(contact.displayName);
 
             return Padding(
               padding: const EdgeInsets.only(bottom: 12),
@@ -51,23 +50,14 @@ class HomeScreen extends GetView<HomeController> {
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: theme.colorScheme.primary,
-                            width: 1,
-                          ),
-                        ),
+                      Align(
                         child: CircleAvatar(
-                          radius: 19,
-                          backgroundColor: theme.colorScheme.background,
+                          radius: 20,
+                          backgroundColor: theme.colorScheme.primary,
                           child: Text(
-                            initials,
-                            style: theme.textTheme.muted.copyWith(
-                              color: theme.colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            contact.displayName[0],
+                            style: const TextStyle(
+                                fontSize: 25),
                           ),
                         ),
                       ),
@@ -104,13 +94,5 @@ class HomeScreen extends GetView<HomeController> {
         );
       }),
     );
-  }
-
-  String _getInitials(String? name) {
-    if (name == null || name.trim().isEmpty) return "?";
-    List<String> names = name.trim().split(RegExp(r'\s+'));
-    return names.length > 1
-        ? "${names[0][0]}${names[1][0]}".toUpperCase()
-        : names[0][0].toUpperCase();
   }
 }
