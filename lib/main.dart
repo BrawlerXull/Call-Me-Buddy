@@ -1,4 +1,5 @@
 import 'package:callmebuddy/firebase_options.dart';
+import 'package:callmebuddy/infrastructure/dal/services/local_notification_service.dart';
 import 'package:callmebuddy/infrastructure/navigation/bindings/controllers/initial_bindings.dart';
 import 'package:callmebuddy/infrastructure/theme/shad_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,6 +27,9 @@ void main() async {
   });
 
   String initialRoute = await Routes.getInitialRoute();
+  LocalNotificationService localNotificationService =
+      LocalNotificationService();
+  localNotificationService.firebaseInit();
 
   runApp(Main(initialRoute));
 }
